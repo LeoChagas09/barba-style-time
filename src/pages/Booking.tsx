@@ -12,8 +12,8 @@ import { Service, Barber } from '@/types';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 
 const steps = [
-  { id: 1, title: 'Serviço', description: 'Escolha o tipo de serviço' },
-  { id: 2, title: 'Barbeiro', description: 'Selecione o profissional' },
+  { id: 1, title: 'Barbeiro', description: 'Selecione o profissional' },
+  { id: 2, title: 'Serviço', description: 'Escolha o tipo de serviço' },
   { id: 3, title: 'Data/Hora', description: 'Quando deseja ser atendido' },
   { id: 4, title: 'Dados', description: 'Suas informações' },
   { id: 5, title: 'Confirmação', description: 'Revisar e confirmar' }
@@ -21,9 +21,10 @@ const steps = [
 
 interface BookingProps {
   onAdminLogin: () => void;
+  onBack: () => void;
 }
 
-export const Booking = ({ onAdminLogin }: BookingProps) => {
+export const Booking = ({ onAdminLogin, onBack }: BookingProps) => {
   const [currentStep, setCurrentStep] = useState(1);
   const [selectedService, setSelectedService] = useState<Service | null>(null);
   const [selectedBarber, setSelectedBarber] = useState<Barber | null>(null);
@@ -35,8 +36,8 @@ export const Booking = ({ onAdminLogin }: BookingProps) => {
 
   const canProceedToNext = () => {
     switch (currentStep) {
-      case 1: return !!selectedService;
-      case 2: return !!selectedBarber;
+      case 1: return !!selectedBarber;
+      case 2: return !!selectedService;
       case 3: return !!selectedDate && !!selectedTime;
       case 4: return !!clientData;
       default: return false;
@@ -121,18 +122,18 @@ export const Booking = ({ onAdminLogin }: BookingProps) => {
           <div className="max-w-4xl mx-auto">
             <div className="bg-background rounded-lg shadow-elegant p-6 animate-fade-in">
               {currentStep === 1 && (
-                <ServiceSelection
-                  services={services}
-                  selectedService={selectedService}
-                  onSelectService={setSelectedService}
-                />
-              )}
-
-              {currentStep === 2 && (
                 <BarberSelection
                   barbers={barbers}
                   selectedBarber={selectedBarber}
                   onSelectBarber={setSelectedBarber}
+                />
+              )}
+
+              {currentStep === 2 && (
+                <ServiceSelection
+                  services={services}
+                  selectedService={selectedService}
+                  onSelectService={setSelectedService}
                 />
               )}
 
@@ -156,12 +157,11 @@ export const Booking = ({ onAdminLogin }: BookingProps) => {
               <div className="flex justify-between items-center mt-8">
                 <Button
                   variant="outline"
-                  onClick={handleBack}
-                  disabled={currentStep === 1}
+                  onClick={currentStep === 1 ? onBack : handleBack}
                   className="flex items-center gap-2"
                 >
                   <ChevronLeft className="w-4 h-4" />
-                  Voltar
+                  {currentStep === 1 ? 'Início' : 'Voltar'}
                 </Button>
 
                 <Button
