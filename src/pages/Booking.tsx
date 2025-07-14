@@ -9,7 +9,7 @@ import { ConfirmationScreen } from '@/components/booking/ConfirmationScreen';
 import { Header } from '@/components/layout/Header';
 import { services, barbers } from '@/data/mockData';
 import { Service, Barber } from '@/types';
-import { ChevronLeft, ChevronRight } from 'lucide-react';
+import { ChevronLeft, ChevronRight, User, Scissors, Calendar, ClipboardList, CheckCircle } from 'lucide-react';
 
 const steps = [
   { id: 1, title: 'Barbeiro', description: 'Selecione o profissional' },
@@ -17,6 +17,14 @@ const steps = [
   { id: 3, title: 'Data/Hora', description: 'Quando deseja ser atendido' },
   { id: 4, title: 'Dados', description: 'Suas informações' },
   { id: 5, title: 'Confirmação', description: 'Revisar e confirmar' }
+];
+
+const stepIcons = [
+  <User className="w-6 h-6 mr-2 text-primary inline" key="user" />, // Barbeiro
+  <Scissors className="w-6 h-6 mr-2 text-primary inline" key="scissors" />, // Serviço
+  <Calendar className="w-6 h-6 mr-2 text-primary inline" key="calendar" />, // Data/Hora
+  <ClipboardList className="w-6 h-6 mr-2 text-primary inline" key="clipboard" />, // Dados
+  <CheckCircle className="w-6 h-6 mr-2 text-primary inline" key="check" /> // Confirmação
 ];
 
 interface BookingProps {
@@ -100,8 +108,8 @@ export const Booking = ({ onAdminLogin, onBack }: BookingProps) => {
           <div className="container mx-auto px-4">
             <div className="max-w-4xl mx-auto">
               <div className="flex items-center justify-between mb-4">
-                <h1 className="text-2xl font-bold text-foreground">
-                  {steps[currentStep - 1].title}
+                <h1 className="text-2xl font-bold text-foreground flex items-center">
+                  {stepIcons[currentStep - 1]}{steps[currentStep - 1].title}
                 </h1>
                 <span className="text-sm text-muted-foreground">
                   Passo {currentStep} de {steps.length}
@@ -164,16 +172,18 @@ export const Booking = ({ onAdminLogin, onBack }: BookingProps) => {
                   {currentStep === 1 ? 'Início' : 'Voltar'}
                 </Button>
 
-                <Button
-                  variant="premium"
-                  onClick={currentStep === 4 ? undefined : handleNext}
-                  disabled={!canProceedToNext()}
-                  className="flex items-center gap-2"
-                  type={currentStep === 4 ? "submit" : "button"}
-                >
-                  {currentStep === 4 ? 'Confirmar agendamento' : 'Próximo'}
-                  {currentStep !== 4 && <ChevronRight className="w-4 h-4" />}
-                </Button>
+                {currentStep !== 4 && (
+                  <Button
+                    variant="premium"
+                    onClick={handleNext}
+                    disabled={!canProceedToNext()}
+                    className="flex items-center gap-2"
+                    type="button"
+                  >
+                    Próximo
+                    <ChevronRight className="w-4 h-4" />
+                  </Button>
+                )}
               </div>
             )}
           </div>

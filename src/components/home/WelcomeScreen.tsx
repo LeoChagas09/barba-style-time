@@ -1,6 +1,8 @@
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Calendar, Search, Settings } from 'lucide-react';
+import { Calendar, Search, Settings, Instagram, Phone } from 'lucide-react';
+import logo from '@/assets/logo.png';
+import { FaInstagram, FaWhatsapp } from 'react-icons/fa';
 
 interface WelcomeScreenProps {
   onClientBook: () => void;
@@ -14,38 +16,20 @@ export const WelcomeScreen = ({ onClientBook, onClientConsult, onAdminLogin }: W
       <div className="container mx-auto px-4">
         <div className="max-w-4xl mx-auto text-center">
           <div className="mb-12">
-            <h1 className="text-4xl md:text-6xl font-bold text-white mb-6">
-              Barbearia <span className="text-primary">Gomes</span>
-            </h1>
-            <p className="text-xl text-white/80 mb-8">
-              Seu estilo, nossa paixão
-            </p>
+            <div className="w-full bg-white/80 dark:bg-black/60 py-6 relative flex items-center justify-center shadow-lg rounded-md">
+              <img src={logo} alt="Logo" className="h-24 object-contain mx-auto" />
+              <Button
+                onClick={onAdminLogin}
+                variant="ghost"
+                className="text-muted-foreground hover:text-foreground flex items-center gap-2 absolute right-6 top-1/2 -translate-y-1/2"
+              >
+                <Settings className="w-5 h-5" />
+                Admin
+              </Button>
+            </div>
           </div>
 
           <div className="grid md:grid-cols-2 gap-6 mb-8">
-            {/* Cliente - Agendar */}
-            <Card className="bg-background/95 backdrop-blur border-border hover:shadow-elegant transition-all duration-300">
-              <CardHeader>
-                <div className="w-12 h-12 bg-primary/20 rounded-lg flex items-center justify-center mb-4 mx-auto">
-                  <Calendar className="w-6 h-6 text-primary" />
-                </div>
-                <CardTitle className="text-xl">Agendar Horário</CardTitle>
-                <CardDescription>
-                  Faça seu agendamento de forma rápida e prática
-                </CardDescription>
-              </CardHeader>
-              <CardContent>
-                <Button 
-                  onClick={onClientBook}
-                  variant="premium" 
-                  size="lg" 
-                  className="w-full"
-                >
-                  Agendar Agora
-                </Button>
-              </CardContent>
-            </Card>
-
             {/* Cliente - Consultar */}
             <Card className="bg-background/95 backdrop-blur border-border hover:shadow-elegant transition-all duration-300">
               <CardHeader>
@@ -68,19 +52,57 @@ export const WelcomeScreen = ({ onClientBook, onClientConsult, onAdminLogin }: W
                 </Button>
               </CardContent>
             </Card>
+
+             {/* Cliente - Agendar */}
+             <Card className="bg-background/95 backdrop-blur border-border hover:shadow-elegant transition-all duration-300">
+              <CardHeader>
+                <div className="w-12 h-12 bg-primary/20 rounded-lg flex items-center justify-center mb-4 mx-auto">
+                  <Calendar className="w-6 h-6 text-primary" />
+                </div>
+                <CardTitle className="text-xl">Agendar Horário</CardTitle>
+                <CardDescription>
+                  Faça seu agendamento de forma rápida e prática
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                <Button 
+                  onClick={onClientBook}
+                  variant="premium" 
+                  size="lg" 
+                  className="w-full"
+                >
+                  Agendar Agora
+                </Button>
+              </CardContent>
+            </Card>
           </div>
 
-          {/* Admin */}
-          <div className="flex justify-center">
-            <Button
-              onClick={onAdminLogin}
-              variant="ghost"
-              className="text-white/70 hover:text-white flex items-center gap-2"
-            >
-              <Settings className="w-4 h-4" />
-              Acesso Administrativo
-            </Button>
+          {/* Botões sociais */}
+          <div className="flex flex-col items-center gap-2 mb-8">
+            <span className="text-white text-lg font-medium">Acesse também</span>
+            <div className="flex gap-6 justify-center mt-2">
+              <a
+                href="https://instagram.com/barbeariafernandogomes"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Instagram"
+                className="hover:scale-110 transition-transform"
+              >
+                <FaInstagram className="w-10 h-10 text-white" />
+              </a>
+              <a
+                href="https://wa.me/5518997870083"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="WhatsApp"
+                className="hover:scale-110 transition-transform"
+              >
+                <FaWhatsapp className="w-10 h-10 text-white" />
+              </a>
+            </div>
           </div>
+
+          
         </div>
       </div>
     </div>

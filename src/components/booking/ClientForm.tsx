@@ -104,7 +104,7 @@ export const ClientForm = ({ onSubmit }: ClientFormProps) => {
                   placeholder={isExistingClient ? "Nome preenchido automaticamente" : "Digite seu nome"}
                   value={name}
                   onChange={(e) => setName(e.target.value)}
-                  className={`pl-10 ${isExistingClient ? 'pr-10 bg-green-50 border-green-200' : ''}`}
+                  className={`pl-10 ${isExistingClient ? 'pr-10 bg-green-50 border-green-200 text-black' : ''}`}
                   required
                   readOnly={isExistingClient}
                 />
