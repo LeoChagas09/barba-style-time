@@ -5,19 +5,19 @@ export const barbers: Barber[] = [
     id: '1',
     name: 'Fernando Gomes',
     specialty: 'Cortes clássicos e modernos',
-    avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop&crop=face'
+    avatar: 'https://media-gru1-2.cdn.whatsapp.net/v/t61.24694-24/491886646_30785610081038519_319260474686991272_n.jpg?ccb=11-4&oh=01_Q5Aa2AGDSquM1BcNgZ0qTO1qSCV6IHIx7FZJg0qCU5AVRVa4TQ&oe=68849F55&_nc_sid=5e03e0&_nc_cat=104'
   },
   {
     id: '2',
-    name: 'João Silva',
+    name: 'Leonardo Chagas',
     specialty: 'Barbas e bigodes',
-    avatar: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&h=150&fit=crop&crop=face'
+    avatar: 'https://media-gru1-2.cdn.whatsapp.net/v/t61.24694-24/408946755_814193623962330_5497489951670147482_n.jpg?ccb=11-4&oh=01_Q5Aa2AFQiOUgUzdvDVhppg8rKPKSWWA4fTE-NC3uRFxeKuaH2Q&oe=68849706&_nc_sid=5e03e0&_nc_cat=109'
   },
   {
     id: '3',
-    name: 'Carlos Santos',
-    specialty: 'Cortes infantis',
-    avatar: 'https://images.unsplash.com/photo-1560250097-0b93528c311a?w=150&h=150&fit=crop&crop=face'
+    name: 'Fernando Mendes',
+    specialty: 'Cortou, raspou, ta novo!',
+    avatar: 'https://media-gru1-2.cdn.whatsapp.net/v/t61.24694-24/516467817_1489697035524709_6724042363211930515_n.jpg?ccb=11-4&oh=01_Q5Aa2AFxxCy7fArRWXIrgMPPaOOicC_ZGV47tUTtAnqzd7so8Q&oe=6884B23F&_nc_sid=5e03e0&_nc_cat=110'
   }
 ];
 
@@ -89,7 +89,7 @@ export const generateTimeSlots = (startTime: string, endTime: string, duration: 
   const start = new Date(`2024-01-01 ${startTime}`);
   const end = new Date(`2024-01-01 ${endTime}`);
   
-  let current = new Date(start);
+  const current = new Date(start);
   
   while (current < end) {
     const timeString = current.toTimeString().slice(0, 5);

@@ -50,7 +50,7 @@ export const DateTimeSelection = ({
               mode="single"
               selected={selectedDate || undefined}
               onSelect={(date) => date && onSelectDate(date)}
-              disabled={(date) => date < new Date() || date.getDay() === 0} // Desabilita domingos e datas passadas
+              disabled={(date) => date <= new Date() || date.getDay() === 0} // Desabilita domingos e datas passadas
               className="rounded-md border pointer-events-auto"
               locale={ptBR}
             />
@@ -65,7 +65,7 @@ export const DateTimeSelection = ({
               Horários Disponíveis
               {serviceDuration && (
                 <Badge variant="secondary" className="ml-auto">
-                  {serviceDuration} min
+                  <span className="whitespace-nowrap">{serviceDuration} min</span>
                 </Badge>
               )}
             </CardTitle>

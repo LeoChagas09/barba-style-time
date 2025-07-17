@@ -14,18 +14,30 @@ export const WelcomeScreen = ({ onClientBook, onClientConsult, onAdminLogin }: W
   return (
     <div className="min-h-screen bg-gradient-dark flex items-center justify-center">
       <div className="container mx-auto px-4">
-        <div className="max-w-4xl mx-auto text-center">
+        <div className="max-w-4xl mx-auto text-center relative">
+          {/* Botão Admin mobile - canto superior direito, fora do card */}
+          <Button
+            onClick={onAdminLogin}
+            variant="ghost"
+            className="text-muted-foreground hover:text-foreground flex items-center gap-2 md:hidden absolute top-0 right-0 m-2 z-10"
+          >
+            <Settings className="w-5 h-5" />
+            Admin
+          </Button>
           <div className="mb-12">
-            <div className="w-full bg-white/80 dark:bg-black/60 py-6 relative flex items-center justify-center shadow-lg rounded-md">
-              <img src={logo} alt="Logo" className="h-24 object-contain mx-auto" />
-              <Button
-                onClick={onAdminLogin}
-                variant="ghost"
-                className="text-muted-foreground hover:text-foreground flex items-center gap-2 absolute right-6 top-1/2 -translate-y-1/2"
-              >
-                <Settings className="w-5 h-5" />
-                Admin
-              </Button>
+            <div className="w-full bg-white/80 dark:bg-black/60 py-6 shadow-lg rounded-md flex flex-col items-center relative">
+              <div className="relative w-full flex justify-center items-center">
+                <img src={logo} alt="Logo" className="h-24 object-contain mx-auto" />
+                {/* Botão Admin desktop - lado direito */}
+                <Button
+                  onClick={onAdminLogin}
+                  variant="ghost"
+                  className="text-muted-foreground hover:text-foreground flex items-center gap-2 hidden md:flex absolute right-6 top-1/2 -translate-y-1/2"
+                >
+                  <Settings className="w-5 h-5" />
+                  Admin
+                </Button>
+              </div>
             </div>
           </div>
 

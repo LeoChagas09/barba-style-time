@@ -10,6 +10,10 @@ interface ServiceSelectionProps {
 }
 
 export const ServiceSelection = ({ services, selectedService, onSelectService }: ServiceSelectionProps) => {
+  // Função para formatar o preço em moeda brasileira
+  const formatPrice = (price: number) => {
+    return price.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+  };
   return (
     <div className="space-y-4">
       <div className="text-center">
@@ -21,40 +25,36 @@ export const ServiceSelection = ({ services, selectedService, onSelectService }:
         </p>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-4">
         {services.map((service) => (
           <Card 
             key={service.id} 
-            className={`cursor-pointer transition-all duration-200 hover:shadow-md ${
+            className={`relative cursor-pointer transition-all duration-200 hover:shadow-md p-4 flex flex-col items-center justify-center ${
               selectedService?.id === service.id 
                 ? 'ring-2 ring-primary bg-accent/50' 
-                : 'hover:bg-accent/20'
+                : 'hover:bg-accent/10'
             }`}
             onClick={() => onSelectService(service)}
           >
-            <CardHeader className="pb-3">
-              <CardTitle className="text-lg">{service.name}</CardTitle>
-              {service.description && (
-                <CardDescription>{service.description}</CardDescription>
-              )}
+            {/* Check de selecionado */}
+            {selectedService?.id === service.id && (
+              <div className="absolute top-2 right-2 bg-primary rounded-full p-1">
+                <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" /></svg>
+              </div>
+            )}
+            <CardHeader className="pb-2 flex flex-col items-center justify-center">
+              <CardTitle className="text-lg text-center font-bold mb-2">{service.name}</CardTitle>
             </CardHeader>
-            <CardContent className="pt-0">
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-4 text-sm text-muted-foreground">
-                  <div className="flex items-center gap-1">
-                    <Clock className="w-4 h-4" />
-                    <span>{service.duration} min</span>
-                  </div>
-                  <div className="flex items-center gap-1">
-                    <DollarSign className="w-4 h-4" />
-                    <span>R$ {service.price}</span>
-                  </div>
+            <CardContent className="pt-0 flex flex-col items-center justify-center gap-1 w-full">
+              <div className="flex items-center justify-center gap-2 w-full">
+                <div className="flex flex-col items-center gap-0.5 bg-accent/20 rounded-md px-2 py-1 min-w-[70px]">
+                  <Clock className="w-4 h-4 mb-0.5 text-primary" />
+                  <span className="text-sm font-semibold">{service.duration} min</span>
                 </div>
-                {selectedService?.id === service.id && (
-                  <Button size="sm" variant="premium">
-                    Selecionado
-                  </Button>
-                )}
+                <div className="flex flex-col items-center gap-0.5 bg-accent/20 rounded-md px-2 py-1 min-w-[70px] max-w-[110px]">
+                  <DollarSign className="w-4 h-4 mb-0.5 text-primary" />
+                  <span className="text-sm font-semibold truncate text-center w-full" title={formatPrice(service.price)}>{formatPrice(service.price)}</span>
+                </div>
               </div>
             </CardContent>
           </Card>

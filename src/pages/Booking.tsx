@@ -10,6 +10,7 @@ import { Header } from '@/components/layout/Header';
 import { services, barbers } from '@/data/mockData';
 import { Service, Barber } from '@/types';
 import { ChevronLeft, ChevronRight, User, Scissors, Calendar, ClipboardList, CheckCircle } from 'lucide-react';
+import { useIsMobile } from '@/hooks/use-mobile';
 
 const steps = [
   { id: 1, title: 'Barbeiro', description: 'Selecione o profissional' },
@@ -39,6 +40,7 @@ export const Booking = ({ onAdminLogin, onBack }: BookingProps) => {
   const [selectedDate, setSelectedDate] = useState<Date | null>(null);
   const [selectedTime, setSelectedTime] = useState<string | null>(null);
   const [clientData, setClientData] = useState<{ name: string; phone: string } | null>(null);
+  const isMobile = useIsMobile();
 
   const progress = (currentStep / steps.length) * 100;
 
@@ -115,16 +117,28 @@ export const Booking = ({ onAdminLogin, onBack }: BookingProps) => {
                   Passo {currentStep} de {steps.length}
                 </span>
               </div>
-              
               <Progress value={progress} className="h-2 mb-4" />
-              
               <p className="text-muted-foreground">
                 {steps[currentStep - 1].description}
               </p>
             </div>
           </div>
         </div>
-
+        {/* Botão Início/Voltar no mobile, fora do passo a passo, acima dos cards */}
+        {isMobile && currentStep < 5 && (
+          <div className="container mx-auto px-4 mt-4">
+            <div className="max-w-4xl mx-auto">
+              <Button
+                variant="outline"
+                onClick={currentStep === 1 ? onBack : handleBack}
+                className="flex items-center gap-2 w-full"
+              >
+                <ChevronLeft className="w-4 h-4" />
+                {currentStep === 1 ? 'Início' : 'Voltar'}
+              </Button>
+            </div>
+          </div>
+        )}
         {/* Conteúdo principal */}
         <div className="container mx-auto px-4 py-8">
           <div className="max-w-4xl mx-auto">
@@ -136,7 +150,6 @@ export const Booking = ({ onAdminLogin, onBack }: BookingProps) => {
                   onSelectBarber={setSelectedBarber}
                 />
               )}
-
               {currentStep === 2 && (
                 <ServiceSelection
                   services={services}
@@ -144,7 +157,6 @@ export const Booking = ({ onAdminLogin, onBack }: BookingProps) => {
                   onSelectService={setSelectedService}
                 />
               )}
-
               {currentStep === 3 && selectedService && (
                 <DateTimeSelection
                   selectedDate={selectedDate}
@@ -154,14 +166,12 @@ export const Booking = ({ onAdminLogin, onBack }: BookingProps) => {
                   onSelectTime={setSelectedTime}
                 />
               )}
-
               {currentStep === 4 && (
                 <ClientForm onSubmit={handleClientFormSubmit} />
               )}
             </div>
-
-            {/* Navegação */}
-            {currentStep < 5 && (
+            {/* Navegação desktop */}
+            {currentStep < 5 && !isMobile && (
               <div className="flex justify-between items-center mt-8">
                 <Button
                   variant="outline"
@@ -171,7 +181,6 @@ export const Booking = ({ onAdminLogin, onBack }: BookingProps) => {
                   <ChevronLeft className="w-4 h-4" />
                   {currentStep === 1 ? 'Início' : 'Voltar'}
                 </Button>
-
                 {currentStep !== 4 && (
                   <Button
                     variant="premium"
@@ -184,6 +193,21 @@ export const Booking = ({ onAdminLogin, onBack }: BookingProps) => {
                     <ChevronRight className="w-4 h-4" />
                   </Button>
                 )}
+              </div>
+            )}
+            {/* Navegação mobile: botão Próximo embaixo */}
+            {currentStep < 5 && isMobile && currentStep !== 4 && (
+              <div className="flex justify-end items-center mt-8">
+                <Button
+                  variant="premium"
+                  onClick={handleNext}
+                  disabled={!canProceedToNext()}
+                  className="flex items-center gap-2 w-full"
+                  type="button"
+                >
+                  Próximo
+                  <ChevronRight className="w-4 h-4" />
+                </Button>
               </div>
             )}
           </div>
